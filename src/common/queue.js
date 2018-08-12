@@ -3,36 +3,33 @@
 
 import * as amqp from 'amqplib'
 import {config} from './config'
-import type {Command, CommandType} from './types'
+import type {Command} from './types'
 
-const ready = amqp.connect(config.queueConnection.host)
-.then(conn => conn.createChannel());
-
-const queueCommand = function(command: Command) {
+const queueCommand = function(command: Command): void {
     const queueName = command.type;
-    ready
-    .then(ch => {
-        return ch.assertQueue(queueName)
-            && ch.sendToQueue(queueName, Buffer.from(JSON.stringify(command)));
-    })
-    .then(
-        res => {
-            if (res) {
-                console.log(`Command ${JSON.stringify(command)} added to queue ${queueName}`);
-            } else {
-                console.error(`Error queueing command ${JSON.stringify(command)} to queue ${queueName}`)
-            }
-            return res;
-        }
-    )
-    .catch(err => console.error(err.message));
+    amqp.connect(config.queueConnection.host).then(function(conn) {
+        return conn.createChannel().then(function(ch) {
+            const msg = JSON.stringify(command);
+            const ok = ch.assertQueue(queueName, {durable: true});
+
+            return ok.then(function(_qok) {
+                ch.sendToQueue(queueName, Buffer.from(msg));
+                return ch.close();
+            });
+        }).finally(function() { conn.close(); });
+    }).catch(console.warn);
 }
 
-const consumeCommand = function(queueName: string, callback: (string) => void) {
-    ready
+const consumeCommand = function(queueName: string, callback: (cmd: Command) => void) {
+    const connection = amqp.connect(config.queueConnection.host);
+    const channel = connection.then(conn => conn.createChannel());
+    channel
     .then(ch => {
         ch.assertQueue(queueName);
-        ch.consume(queueName, msg => callback(JSON.parse(msg.content.toString())), {noAck: true});
+        ch.consume(queueName, msg => {
+            callback(JSON.parse(msg.content.toString()));
+            ch.ackAll();
+        }/*, {noAck: true}*/);
     });
 }
 

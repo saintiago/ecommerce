@@ -10,6 +10,8 @@ module.exports = {
     entry: {
         domain: path.resolve(__dirname, 'src/domain/index.js'),
         front: path.resolve(__dirname, 'src/front/index.js'),
+        order: path.resolve(__dirname, 'src/order/index.js'),
+        stock: path.resolve(__dirname, 'src/stock/index.js'),
     },
 
     output: {
@@ -19,7 +21,7 @@ module.exports = {
 
     devtool: 'cheap-module-eval-source-map',
 
-    watch: true,
+    //watch: true,
 
     module: {
         rules: [
