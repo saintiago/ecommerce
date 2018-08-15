@@ -27,3 +27,11 @@ export type CreateOrderCommand = Command & {type: command.CREATE_ORDER};
 export type OrderCreatedCommand = Command & {type: command.ORDER_CREATED};
 export type ReserveItemCommand = Command & {type: command.RESERVE_ITEM};
 export type ItemReservedCommand = Command & {type: command.ITEM_RESERVED};
+
+export type Status = 'created' | 'reserved' | 'paid' | 'delivered' | 'cancelled';
+
+export type Order = {
+    _id: string,
+    status: Status,
+    items: Array<Item>
+};

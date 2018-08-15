@@ -3,8 +3,12 @@ const config = {
         host: 'amqp://localhost' // TODO move to separate host
     },
 
-    port: {
-        frontend: 3000
+    db: {
+        url: 'mongodb://localhost:27017',
+        dbName: 'ecommerce',
+        table: {
+            order: 'order'
+        }
     }
 };
 

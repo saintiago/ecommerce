@@ -1,9 +1,9 @@
 // @flow
 'use strict';
 
-import * as amqp from 'amqplib'
-import {config} from './config'
-import type {Command} from './types'
+import * as amqp from 'amqplib';
+import {config} from './config';
+import type {Command} from './types';
 
 const queueCommand = function(command: Command): void {
     const queueName = command.type;

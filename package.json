@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "amqplib": "^0.5.2",
+    "mongodb": "^3.1.2",
     "uniqid": "^4.1.1"
   }
 }
