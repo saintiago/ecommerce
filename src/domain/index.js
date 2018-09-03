@@ -3,6 +3,9 @@
 import {consumeCommand} from '../common/queue'
 import * as command from '../common/commands'
 import * as commandResponse from './commandResponse'
+import {infoLogger} from '../common/logger'
+
+infoLogger.info('[domain] Starting service.');
 
 consumeCommand(command.PURCHASE_ATTEMPT, commandResponse.onPurchaseAttempt); // create order
 consumeCommand(command.ORDER_CREATED, commandResponse.onOrderCreated); // reserve item

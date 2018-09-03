@@ -4,8 +4,8 @@ import * as queue from '../common/queue'
 import * as command from '../common/commands'
 import createCommand from '../common/commandFactory'
 
-function sendPurchaseAttempt(size: string, qty: number, id: string): void {
-    const purchaseAttemptCommand = createCommand(command.PURCHASE_ATTEMPT, {size, qty, id}); 
+function sendPurchaseAttempt(size: string, qty: number, orderId: string): void {
+    const purchaseAttemptCommand = createCommand(command.PURCHASE_ATTEMPT, {orderId, items: [{size, qty}]}); 
     queue.queueCommand(purchaseAttemptCommand);
 }
 

@@ -8,11 +8,11 @@ module.exports = {
     target: 'node',
 
     entry: {
+        test: path.resolve(__dirname, 'src/common/test.js'),
         domain: path.resolve(__dirname, 'src/domain/index.js'),
         front: path.resolve(__dirname, 'src/front/index.js'),
         order: path.resolve(__dirname, 'src/order/index.js'),
-        stock: path.resolve(__dirname, 'src/stock/index.js'),
-        db: path.resolve(__dirname, 'src/common/db.js')
+        stock: path.resolve(__dirname, 'src/stock/index.js')
     },
 
     output: {

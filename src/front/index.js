@@ -1,5 +1,8 @@
 // @flow
 import front from './front';
+import {infoLogger} from '../common/logger'
+
+infoLogger.info('Starting front service.');
 
 if (process.argv.length < 4) {
     console.log('What size and how many t-shirts do you want? (for example: xl 5)');
